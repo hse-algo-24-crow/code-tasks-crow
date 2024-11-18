@@ -10,7 +10,7 @@ def fibonacci_rec(n: int) -> int:
     """
     # Точка остановки рекурсии
     if n <= 0:
-        return 0
+        return None
     if n <= 2:
         return 1
     return fibonacci_rec(n - 1) + fibonacci_rec(n - 2)
@@ -24,7 +24,7 @@ def fibonacci_iter(n: int) -> int:
     :return: число Фибоначчи
     """
     if n <= 0:
-        return 0
+        return None
     dp = [0, 1] # массив предыдущих значений
     # Итеративный перебор значений
     for i in range(1, n):
@@ -38,8 +38,8 @@ def fibonacci(n: int) -> int:
     :param n: порядковый номер числа Фибоначчи
     :return: число Фибоначчи
     """
-    if n <= 0:
-        return 0
+    if n <= 0: # 
+        return None
     prev = (0, 1) # предыдущие значения
     # Итеративный перебор значений
     for i in range(1, n):
