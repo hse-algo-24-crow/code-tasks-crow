@@ -13,7 +13,6 @@ def fibonacci_rec(n: int) -> int:
         return 1
 
     return fibonacci_rec(n-1) + fibonacci_rec(n-2)
-    pass
 
 
 def fibonacci_iter(n: int) -> int:
@@ -32,7 +31,6 @@ def fibonacci_iter(n: int) -> int:
         arr.append(arr[i-1] + arr[i-2])
 
     return arr[n-1]
-    pass
 
 
 def fibonacci(n: int) -> int:
@@ -52,8 +50,6 @@ def fibonacci(n: int) -> int:
         f = s
         s = curr
     return curr
-
-    pass
 
 
 def main():
