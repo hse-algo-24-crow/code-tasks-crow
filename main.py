@@ -15,12 +15,12 @@ def calculate_determinant(matrix: list[list[int]]) -> int:
         raise Exception("Пустая матрица")
 
     for row in matrix:
-        if not (isinstance(row, list)):
+        if not isinstance(row, list):
             raise Exception("Переданный параметр не является матрицей")
         if len(row) != len(matrix):
             raise Exception("Переданный параметр не является квадратной матрицей")
         for num in row:
-            if not (isinstance(num, int)):
+            if not isinstance(num, int):
                 raise Exception("Матрица не целочисленная")
     return calculate_determinant_rec(matrix)
 
