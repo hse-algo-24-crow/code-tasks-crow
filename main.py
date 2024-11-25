@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#from profilehooks import profile
-
-#0 1 1 2 3 5 8 13 21 34...
+#1 1 2 3 5 8 13 21 34...
 
 def fibonacci_rec(n: int) -> int:
     # """Возвращает N-е число Фибоначчи. Реализована рекурсивно согласно
@@ -15,12 +13,11 @@ def fibonacci_rec(n: int) -> int:
         raise ValueError("The sequence number cannot be negative")
     #("Порядковый номер не может быть отрицательным")
     elif n == 1:
-        return 0
+        return 1
     elif n == 2:
         return 1
     else:
         return fibonacci_rec(n - 1) + fibonacci_rec(n - 2)    
-    #pass
 
 
 def fibonacci_iter(n: int) -> int:
@@ -34,19 +31,18 @@ def fibonacci_iter(n: int) -> int:
         raise ValueError("The sequence number cannot be negative")
     #("Порядковый номер не может быть отрицательным")
     elif n == 1:
-        return 0
+        return 1
     elif n == 2:
         return 1
     
     fibi = [0] * n
-    fibi[0] = 0
+    fibi[0] = 1
     fibi[1] = 1
     
     for i in range(2, n):
         fibi[i] = fibi[i - 1] + fibi[i - 2]
         
     return fibi[n - 1]
-    #pass
 
 
 def fibonacci(n: int) -> int:
@@ -59,20 +55,20 @@ def fibonacci(n: int) -> int:
         raise ValueError("The sequence number cannot be negative")
     #("Порядковый номер не может быть отрицательным")
     elif n == 1:
-        return 0
+        return 1
     elif n == 2:
         return 1
 
-    a = 0
+    a = 1
     b = 1
+    c = -1
 
     for i in range(2, n):
+        c = a + b
         a = b
-        b = a + b
+        b = c
         
-    return b
-    #pass
-
+    return c
 
 def main():
     n = 35
