@@ -1,14 +1,12 @@
 def calculate_determinant(matrix: list[list[int]]) -> int:
     """Вычисляет определитель целочисленной квадратной матрицы
-                                                                                                                                                                         
     :param matrix: целочисленная квадратная матрица
     :raise Exception: если значение параметра не является целочисленной
     квадратной матрицей
     :return: значение определителя
     """
-    # Проверка на квадратность матрицы
-    if not matrix or any(len(row) != len(matrix) for row in matrix):
-        raise Exception("Матрица должна быть квадратной.")
+    # Валидация входной матрицы
+    validate_matrix(matrix)
 
     # Базовый случай: если размер матрицы 1x1
     if len(matrix) == 1:
@@ -32,6 +30,18 @@ def calculate_determinant(matrix: list[list[int]]) -> int:
 
     return determinant
 
+def validate_matrix(matrix: list[list[int]]) -> None:
+    # Проверка, что matrix является списком
+    if not isinstance(matrix, list):
+        raise Exception("Матрица должна быть списком.")
+
+    # Проверка, что каждый элемент матрицы также является списком
+    if not all(isinstance(row, list) for row in matrix):
+        raise Exception("Каждая строка матрицы должна быть списком.")
+
+    # Проверка, что матрица не пуста и является квадратной
+    if not matrix or any(len(row) != len(matrix) for row in matrix):
+        raise Exception("Матрица должна быть квадратной и непустой.")
 
 def main():
     matrix = [[1, 2], [3, 4]]
@@ -40,7 +50,6 @@ def main():
         print(row)
 
     print(f"Определитель матрицы равен {calculate_determinant(matrix)}")
-
 
 if __name__ == "__main__":
     main()
