@@ -16,7 +16,7 @@ def checks(matrix: list[list[int]]) -> bool:
             if not isinstance(elem, int):
                 raise Exception("В матрице есть нецелочисленные типы данных. Матрица должна состоять из целых чисел")
     
-    return True
+    
 
 
 def calculate_determinant(matrix: list[list[int]]) -> int:
@@ -27,12 +27,24 @@ def calculate_determinant(matrix: list[list[int]]) -> int:
     квадратной матрицей
     :return: значение определителя
     """
-    checks_passed = False
-    if not checks_passed:
-        checks(matrix)
-        checks_passed = True
+    # checks_passed = False
+    # if not checks_passed:
+    #     checks(matrix)
+    #     checks_passed = True # исправить, так как функция работает каждый раз, сделать чтобы срабатывала 1 раз
+
+    checks(matrix)
+    return __calculate_determinant_rec(matrix)
 
 
+
+def __calculate_determinant_rec(matrix: list[list[int]]) -> int:
+    """Вычисляет определитель целочисленной квадратной матрицы
+
+    :param matrix: целочисленная квадратная матрица
+    :raise Exception: если значение параметра не является целочисленной
+    квадратной матрицей
+    :return: значение определителя
+    """
     det = 0
     x = 1  # -1**(i+j)
     size = len(matrix)
@@ -42,7 +54,7 @@ def calculate_determinant(matrix: list[list[int]]) -> int:
     else:
         for j in range(size):
             new_matrix = [items[:j] + items[j + 1:] for items in matrix[1:]]
-            det += x * matrix[0][j] * calculate_determinant(new_matrix)
+            det += x * matrix[0][j] * __calculate_determinant_rec(new_matrix)
             x = -1 * x
 
     return det
@@ -53,7 +65,7 @@ def main():
     print("Матрица")
     for row in matrix:
         print(row)
-
+        
     print(f"Определитель матрицы равен {calculate_determinant(matrix)}")
 
 
