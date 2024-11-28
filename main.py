@@ -76,11 +76,12 @@ def get_tridiagonal_determinant(matrix: list[list[int]]) -> int:
     prev2 = matrix[0][0]
     prev1 = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
 
+    a = matrix[0][0]
+    b = matrix[0][1]
+    c = matrix[1][0]
+
     # Итеративное вычисление определителя
     for i in range(2, size):
-        a = matrix[i][i]
-        b = matrix[i][i - 1]
-        c = matrix[i - 1][i]
         current = a * prev1 - b * c * prev2
         prev2, prev1 = prev1, current
 
