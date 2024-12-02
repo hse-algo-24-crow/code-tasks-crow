@@ -51,7 +51,6 @@ def __add_zero(cur_string: str, strings: list[str], target_len: int):
             strings.append(cur_string)
         else:
             __add_one(cur_string, strings, target_len)
-            __add_zero(cur_string, strings, target_len)
 
 def generate_strings(length: int) -> list[str]:
     """Возвращает строки заданной длины, состоящие из 0 и 1, где никакие
