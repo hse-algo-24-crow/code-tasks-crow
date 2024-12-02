@@ -61,7 +61,7 @@ def binomial_coefficient_iter(n: int, k: int):
             if j == 0 or j == i:
                 coefficients[i][j] = 1
             else:
-                coefficients[i][j] = coefficients[i - 1][j - 1] + coefficients[i - 1][j]
+                coefficients[i][j] = (i/j)*coefficients[i - 1][j - 1]
 
     return coefficients[n][k]
 
@@ -69,7 +69,7 @@ def binomial_coefficient_recursion(n: int, k: int):
     """Рекурсивное вычисление биномиального коэффициента"""
     if k == 1 or n == 1: return n
     if k == 0 or k == n: return 1
-    return binomial_coefficient_recursion(n - 1, k - 1) + binomial_coefficient_recursion(n - 1, k)
+    return (n/k)*binomial_coefficient_recursion(n - 1, k - 1)
 
 
 def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
