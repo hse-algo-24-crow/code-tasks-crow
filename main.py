@@ -105,12 +105,12 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
         return binomial_coefficient(n - 1, k - 1, use_rec=True) + binomial_coefficient(n - 1, k, use_rec=True)
     else:
         # Итеративная реализация
-        if k > n - k:
-            k = n - k
-        result = 1
-        for i in range(k):
-            result = result * (n - i) // (i + 1)
-        return result
+        result = [0] * (k + 1)
+        result[0] = 1
+        for i in range(1, n + 1):
+            for j in range(min(i, k), 0, -1):
+                result[j] = result[j] + result[j - 1]
+        return result[k]
 
 
 def main():
