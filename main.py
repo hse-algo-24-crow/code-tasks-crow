@@ -20,14 +20,12 @@ def generate_strings(length: int) -> list[str]:
     числом.
     :return: Список строк.
     """
-    if not isinstance(length, int):
-        raise ValueError("Длина строки не является целым положительным числом")
+    if not isinstance(length, int) or length <= 0:
+        raise ValueError(STR_LENGTH_ERROR_MSG)
     return generate_strings_engine(length)
 
 
 def generate_strings_engine(length: int) -> list[str]:
-    if length == 0:
-        return []
     return generate_strings_with_ending_zero(length) + generate_strings_with_ending_one(length)
 
 def generate_strings_with_ending_one(length: int) -> list[str]:
@@ -53,8 +51,16 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
     числами или значение параметра n меньше чем k.
     :return: Значение биномиального коэффициента.
     """
-    pass
-
+    if not isinstance(n, int):
+        raise ValueError(NOT_INT_VALUE_TEMPL.format("n"))
+    if not isinstance(k, int):
+        raise ValueError(NOT_INT_VALUE_TEMPL.format("k"))
+    if n < 0:
+        raise ValueError(NEGATIVE_VALUE_TEMPL.format("n"))
+    if k < 0:
+        raise ValueError(NEGATIVE_VALUE_TEMPL.format("k"))
+    if n < k:
+        raise ValueError(N_LESS_THAN_K_ERROR_MSG)
 
 def main():
     n = 10
