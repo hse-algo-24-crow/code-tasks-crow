@@ -20,7 +20,28 @@ def generate_strings(length: int) -> list[str]:
     числом.
     :return: Список строк.
     """
-    pass
+    if not isinstance(length, int):
+        raise ValueError("Длина строки не является целым положительным числом")
+    return generate_strings_engine(length)
+
+
+def generate_strings_engine(length: int) -> list[str]:
+    if length == 0:
+        return []
+    return generate_strings_with_ending_zero(length) + generate_strings_with_ending_one(length)
+
+def generate_strings_with_ending_one(length: int) -> list[str]:
+    if length == 1:
+        return ['1']
+    
+    return [string + '1' for string in generate_strings(length-1)]
+
+    
+def generate_strings_with_ending_zero(length: int) -> list[str]:
+    if length == 1:
+        return ['0']
+    
+    return [string + '0' for string in generate_strings_with_ending_one(length-1)]
 
 
 def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
