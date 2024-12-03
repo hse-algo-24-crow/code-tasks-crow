@@ -20,13 +20,14 @@ def generate_strings(length: int) -> list[str]:
     числом.
     :return: Список строк.
     """
-    if not isinstance(length, int) or length <= 0:
+    if not type(length) is int or length <= 0: #isinstance не работает, тк bool подкласс int
         raise ValueError(STR_LENGTH_ERROR_MSG)
     return generate_strings_engine(length)
 
 
 def generate_strings_engine(length: int) -> list[str]:
     return generate_strings_with_ending_zero(length) + generate_strings_with_ending_one(length)
+
 
 def generate_strings_with_ending_one(length: int) -> list[str]:
     if length == 1:
@@ -61,6 +62,29 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
         raise ValueError(NEGATIVE_VALUE_TEMPL.format("k"))
     if n < k:
         raise ValueError(N_LESS_THAN_K_ERROR_MSG)
+
+    return binomial_coefficient_recursive(n, k) if use_rec else binomial_coefficient_iterative(n, k)
+
+
+def binomial_coefficient_recursive(n: int, k: int) -> int:
+    if k == 0 or k == n:
+        return 1
+    if k > n:
+        return 0
+    
+    return binomial_coefficient_recursive(n - 1, k - 1) + binomial_coefficient_recursive(n -1, k)
+
+
+def binomial_coefficient_iterative(n:int, k:int) -> int:
+    k = min(k, n-k) # минимизируем количество итераций
+    numerator = 1
+    denominator = 1
+    for i in range(k):
+        numerator *= (n-i)
+        denominator *= (i+1)
+
+    return numerator // denominator
+
 
 def main():
     n = 10
