@@ -33,7 +33,7 @@ def validate_strings(length: int) -> None:
         raise ValueError(STR_LENGTH_ERROR_MSG)
 
 
-def __add_one(current_string: str, strings: list[str], length: int):
+def __add_one(current_string: str, strings: list[str], length: int) -> None:
     """Добавляет в строку 1 и рекурсивно вызывает __add_zero."""
     current_string += "1"
     if len(current_string) == length:
@@ -43,7 +43,7 @@ def __add_one(current_string: str, strings: list[str], length: int):
         __add_zero(current_string, strings, length)
 
 
-def __add_zero(current_string: str, strings: list[str], length: int) -> list[str]:
+def __add_zero(current_string: str, strings: list[str], length: int) -> None:
     """Добавляет в строку 0 и рекурсивно вызывает __add_one."""
     current_string += "0"
     if len(current_string) == length:
@@ -66,7 +66,7 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
     return binomial_coefficient_recursive(n, k) if use_rec else binomial_coefficient_iterative(n, k)
 
 
-def validate_params(n: int, k: int):
+def validate_params(n: int, k: int) -> None:
     """Проверяет параметры на корректность."""
     if not isinstance(n, int):
         raise ValueError(NOT_INT_VALUE_TEMPL.format("n"))
