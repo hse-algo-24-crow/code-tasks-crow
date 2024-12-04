@@ -91,6 +91,7 @@ def binomial_coefficient_recursive(n: int, k: int) -> int:
 
 
 def binomial_coefficient_iterative(n:int, k:int) -> int:
+    """Итеративная реализация вычисления биномиального коэффициента."""
     k = min(k, n-k)  # минимизируем количество итераций
     numerator = 1
     denominator = 1
