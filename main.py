@@ -68,14 +68,10 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
 
 def validate_params(n: int, k: int) -> None:
     """Проверяет параметры на корректность."""
-    if not isinstance(n, int):
+    if not type(n) is int or n < 0:   # isinstance не работает, тк bool подкласс int
         raise ValueError(NOT_INT_VALUE_TEMPL.format("n"))
-    if not isinstance(k, int):
+    if not type(k) is int or k < 0:   # isinstance не работает, тк bool подкласс int
         raise ValueError(NOT_INT_VALUE_TEMPL.format("k"))
-    if n < 0:
-        raise ValueError(NEGATIVE_VALUE_TEMPL.format("n"))
-    if k < 0:
-        raise ValueError(NEGATIVE_VALUE_TEMPL.format("k"))
     if n < k:
         raise ValueError(N_LESS_THAN_K_ERROR_MSG)
 
