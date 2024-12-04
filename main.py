@@ -20,27 +20,36 @@ def generate_strings(length: int) -> list[str]:
     числом.
     :return: Список строк.
     """
+    validate_strings(length)
+    strings = []
+    __add_one("", strings, length)
+    __add_zero("", strings, length)
+    return strings
+
+
+def validate_strings(length: int) -> None:
+    """Проверяет параметр length на корректность."""
     if not type(length) is int or length <= 0: #isinstance не работает, тк bool подкласс int
         raise ValueError(STR_LENGTH_ERROR_MSG)
-    return generate_strings_engine(length)
 
 
-def generate_strings_engine(length: int) -> list[str]:
-    return generate_strings_with_ending_zero(length) + generate_strings_with_ending_one(length)
+def __add_one(current_string: str, strings: list[str], length: int):
+    """Добавляет в строку 1 и рекурсивно вызывает __add_zero."""
+    current_string += "1"
+    if len(current_string) == length:
+        strings.append(current_string)
+    else:
+        __add_one(current_string, strings, length)
+        __add_zero(current_string, strings, length)
 
 
-def generate_strings_with_ending_one(length: int) -> list[str]:
-    if length == 1:
-        return ['1']
-    
-    return [string + '1' for string in generate_strings(length-1)]
-
-    
-def generate_strings_with_ending_zero(length: int) -> list[str]:
-    if length == 1:
-        return ['0']
-    
-    return [string + '0' for string in generate_strings_with_ending_one(length-1)]
+def __add_zero(current_string: str, strings: list[str], length: int) -> list[str]:
+    """Добавляет в строку 0 и рекурсивно вызывает __add_one."""
+    current_string += "0"
+    if len(current_string) == length:
+        strings.append(current_string)
+    else:
+        __add_one(current_string, strings, length)
 
 
 def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
@@ -52,6 +61,13 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
     числами или значение параметра n меньше чем k.
     :return: Значение биномиального коэффициента.
     """
+    validate_params(n, k)
+
+    return binomial_coefficient_recursive(n, k) if use_rec else binomial_coefficient_iterative(n, k)
+
+
+def validate_params(n: int, k: int):
+    """Проверяет параметры на корректность."""
     if not isinstance(n, int):
         raise ValueError(NOT_INT_VALUE_TEMPL.format("n"))
     if not isinstance(k, int):
@@ -63,10 +79,9 @@ def binomial_coefficient(n: int, k: int, use_rec=False) -> int:
     if n < k:
         raise ValueError(N_LESS_THAN_K_ERROR_MSG)
 
-    return binomial_coefficient_recursive(n, k) if use_rec else binomial_coefficient_iterative(n, k)
-
 
 def binomial_coefficient_recursive(n: int, k: int) -> int:
+    """Рекурсивная реализация вычисления биномиального коэффициента."""
     if k == 0 or k == n:
         return 1
     if k > n:
