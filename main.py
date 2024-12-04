@@ -29,7 +29,7 @@ def generate_strings(length: int) -> list[str]:
 
 def validate_strings(length: int) -> None:
     """Проверяет параметр length на корректность."""
-    if not type(length) is int or length <= 0: #isinstance не работает, тк bool подкласс int
+    if not type(length) is int or length <= 0:   # isinstance не работает, тк bool подкласс int
         raise ValueError(STR_LENGTH_ERROR_MSG)
 
 
@@ -91,7 +91,7 @@ def binomial_coefficient_recursive(n: int, k: int) -> int:
 
 
 def binomial_coefficient_iterative(n:int, k:int) -> int:
-    k = min(k, n-k) # минимизируем количество итераций
+    k = min(k, n-k)  # минимизируем количество итераций
     numerator = 1
     denominator = 1
     for i in range(k):
