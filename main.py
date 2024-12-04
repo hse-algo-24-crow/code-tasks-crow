@@ -92,14 +92,16 @@ def binomial_coefficient_recursive(n: int, k: int) -> int:
 
 def binomial_coefficient_iterative(n:int, k:int) -> int:
     """Итеративная реализация вычисления биномиального коэффициента."""
-    k = min(k, n-k)  # минимизируем количество итераций
-    numerator = 1
-    denominator = 1
-    for i in range(k):
-        numerator *= (n-i)
-        denominator *= (i+1)
 
-    return numerator // denominator
+    triangle = [[0 for _ in range(k + 1)] for _ in range(n + 1)]
+
+    for col in range(n + 1):
+        for row in range(min(col, k) + 1):
+            if row in (0, col):
+                triangle[col][row] = 1
+            else:
+                triangle[col][row] = triangle[col - 1][row] + triangle[col - 1][row - 1]
+    return triangle[n][k]
 
 
 def main():
