@@ -83,7 +83,6 @@ def get_invest_distribution(
     rem = level_cnt
     for proj_idx in range(project_cnt, 0, -1):
         best_invest_for_proj = 0
-        
         # Текущая целевая прибыль
         current_opt_profit = max_profit_matrix[rem][proj_idx]
 
