@@ -7,6 +7,20 @@ PARAM_ERR_MSG = (
 )
 
 
+def validate_price_table(price_table: list[list[float | int | None]]) -> None:
+    if not price_table or not all(price_table):
+        raise ValueError(PARAM_ERR_MSG)
+
+    cols = len(price_table[0])
+
+    for row in price_table:
+        if len(row) != cols:
+            raise ValueError(PARAM_ERR_MSG)
+        for value in row:
+            if value is not None and not isinstance(value, (int, float)):
+                raise ValueError(PARAM_ERR_MSG)
+
+
 def get_min_cost_path(
         price_table: list[list[float | int | None]],
 ) -> dict[str: float | None, str: list[tuple[int, int]] | None]:
@@ -25,52 +39,42 @@ def get_min_cost_path(
     не существует.
     """
 
-    # Проверка на корректность входных данных
-    if not price_table or not all(price_table):
-        raise ValueError(PARAM_ERR_MSG)
+    validate_price_table(price_table)
 
     rows = len(price_table)
     cols = len(price_table[0])
 
-    # Проверка на прямоугольность и числовые значения
-    for row in price_table:
-        if len(row) != cols:
-            raise ValueError(PARAM_ERR_MSG)
-        for value in row:
-            if value is not None and not isinstance(value, (int, float)):
-                raise ValueError(PARAM_ERR_MSG)
-
     # Инициализация массива для хранения минимальных затрат
-    dp = [[INF] * cols for _ in range(rows)]
-    dp[0][0] = price_table[0][0] if price_table[0][0] is not None else INF
+    table = [[INF] * cols for _ in range(rows)]
+    table[0][0] = price_table[0][0] if price_table[0][0] is not None else INF
 
     # Заполнение массива минимальных затрат
-    for i in range(rows):
-        for j in range(cols):
-            if price_table[i][j] is None:
+    for row in range(rows):
+        for col in range(cols):
+            if price_table[row][col] is None:
                 continue
-            if i > 0:
-                dp[i][j] = min(dp[i][j], dp[i - 1][j] + price_table[i][j])
-            if j > 0:
-                dp[i][j] = min(dp[i][j], dp[i][j - 1] + price_table[i][j])
+            if row > 0:
+                table[row][col] = min(table[row][col], table[row - 1][col] + price_table[row][col])
+            if col > 0:
+                table[row][col] = min(table[row][col], table[row][col - 1] + price_table[row][col])
 
     # Если путь невозможен
-    if dp[-1][-1] == INF:
+    if table[-1][-1] == INF:
         return {COST: None, PATH: None}
 
     # Восстановление пути
     path = []
-    i, j = rows - 1, cols - 1
-    while i > 0 or j > 0:
-        path.append((i, j))
-        if i > 0 and dp[i][j] == dp[i - 1][j] + (price_table[i][j] if price_table[i][j] is not None else INF):
-            i -= 1
+    row, col = rows - 1, cols - 1
+    while row > 0 or col > 0:
+        path.append((row, col))
+        if row > 0 and table[row][col] == table[row - 1][col] + price_table[row][col]:
+            row -= 1
         else:
-            j -= 1
+            col -= 1
     path.append((0, 0))
     path.reverse()
 
-    return {COST: dp[-1][-1], PATH: path}
+    return {COST: table[-1][-1], PATH: path}
 
 
 def main():
