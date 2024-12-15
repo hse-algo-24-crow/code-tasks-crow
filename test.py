@@ -1,6 +1,7 @@
+from typing import Generator
 import unittest
 
-from main import generate_permutations
+from main import ErrorMessages, generate_permutations
 
 
 class TestPermutation(unittest.TestCase):
@@ -11,26 +12,26 @@ class TestPermutation(unittest.TestCase):
         в параметр некорректного значения"""
         incorrect_inputs = (None, "string", 1.1, {1, 2, 3}, (1, 2, 3))
         for val in incorrect_inputs:
-            self.assertRaisesRegex(
-                TypeError,
-                "Параметр items не является списком",
-                generate_permutations,
-                val,
-            )
+            with self.assertRaises(TypeError) as ctx:
+                for perm in generate_permutations(val):
+                    ...
+            self.assertEqual(ErrorMessages.ERROR_ITEMS_NOT_IS_LIST, str(ctx.exception))
 
     def test_duplicates(self):
         """Проверка выброса ValueError исключения при передаче
         в параметр списка с дубликатами"""
-        self.assertRaisesRegex(
-            ValueError,
-            "Список элементов содержит дубликаты",
-            generate_permutations,
-            [1, 1, 2, 3],
-        )
+        with self.assertRaises(ValueError) as ctx:
+            for perm in generate_permutations([1, 1, 2, 3]):
+                ...
+        self.assertEqual(ErrorMessages.ERROR_DUPLICATE_ITEMS, str(ctx.exception))
+
+    def test_is_generator(self):
+        """Проверка того, что функция возвращает генератор"""
+        self.assertIsInstance(generate_permutations([]), Generator)
 
     def test_empty(self):
         """Проверка генерации перестановок для пустого множества"""
-        self.assertCountEqual([], generate_permutations([]))
+        self.assertCountEqual([[]], generate_permutations([]))
 
     def test_single_num(self):
         """Проверка генерации перестановок для множества из одного числа"""
@@ -52,7 +53,7 @@ class TestPermutation(unittest.TestCase):
         """Проверка генерации перестановок для множества из трех чисел"""
         self.assertCountEqual(
             [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]],
-            generate_permutations([1, 2, 3]),
+            generate_permutations([3, 2, 1]),
         )
 
     def test_triple_char(self):

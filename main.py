@@ -1,20 +1,26 @@
-from typing import Any
+from typing import Any, Generator
 
 
-def generate_permutations(items: list[Any]) -> list[list[Any]]:
-    """Генерирует все варианты перестановок элементов указанного множества
-    :param items: список элементов
-    :raise TypeError: если параметр items не является списком
-    :raise ValueError: если список элементов содержит дубликаты
-    :return: список перестановок, где каждая перестановка список элементов
-    множества
+class ErrorMessages:
+    ERROR_ITEMS_NOT_IS_LIST = "Параметр items не является списком"
+    ERROR_DUPLICATE_ITEMS = "Список элементов содержит дубликаты"
+
+
+def generate_permutations(items: list[Any]) -> Generator[list[Any], None, None]:
+    """
+    Создает генератор перестановок элементов указанного множества в лексикографическом порядке.
+    :param items: список элементов.
+    :raise TypeError: если параметр items не является списком.
+    :raise ValueError: если список элементов содержит дубликаты.
+    :return: следующую перестановку элементов множества.
     """
     pass
 
 
 def main():
-    items = [1, 2, 3]
-    print(generate_permutations(items))
+    items = [3, 2, 1]
+    for perm in generate_permutations(items):
+        print(perm)
 
 
 if __name__ == "__main__":
